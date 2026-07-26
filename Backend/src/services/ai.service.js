@@ -2,8 +2,9 @@ require("dotenv").config();
 
 const { GoogleGenAI } = require("@google/genai");
 
+const googleApiKey = process.env.GOOGLE_API_KEY || process.env.GOOGLE_GENAI_API_KEY;
 const ai = new GoogleGenAI({
-    apiKey: process.env.GOOGLE_GENAI_API_KEY,
+    apiKey: googleApiKey,
 });
 
 function extractMatchScore(value) {
@@ -43,8 +44,8 @@ function normalizeMatchScore(value) {
 }
 
 async function generateInterviewReport({ resume, selfDescription, jobDescription }) {
-    if (!process.env.GOOGLE_GENAI_API_KEY) {
-        throw new Error("GOOGLE_GENAI_API_KEY is missing");
+    if (!googleApiKey) {
+        throw new Error("GOOGLE_API_KEY is missing");
     }
 
     const prompt = `
@@ -161,8 +162,8 @@ async function generateResumeFromGemini({
     preferredStyle,
     pageLimit,
 }) {
-    if (!process.env.GOOGLE_GENAI_API_KEY) {
-        throw new Error("GOOGLE_GENAI_API_KEY is missing");
+    if (!googleApiKey) {
+        throw new Error("GOOGLE_API_KEY is missing");
     }
 
     const candidateDetails = [];

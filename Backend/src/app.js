@@ -6,14 +6,24 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors(
-    {
-        origin:"http://localhost:5173",
-        credentials: true 
-    }
-))
+const allowedOrigins = ["http://localhost:5173"];
+if (process.env.CLIENT_URL) {
+    allowedOrigins.push(process.env.CLIENT_URL);
+}
 
+app.use(
+    cors({
+        origin: allowedOrigins,
+        credentials: true,
+    })
+);
 
+app.get("/", (req, res) => {
+    res.json({
+        success: true,
+        message: "PrepWise AI Backend Running 🚀",
+    });
+});
 
 /* requires all auth routes here */
 const authRouter = require("./routes/auth.routes");

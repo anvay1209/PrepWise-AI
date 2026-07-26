@@ -34,7 +34,12 @@ async function registerUserController(req, res) {
             expiresIn: "1h",
         });
 
-        res.cookie("token", token, { httpOnly: true, sameSite: "lax" })
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
 
         res.status(201).json({
             message: "User registered successfully",
@@ -79,7 +84,12 @@ async function loginUserController(req, res) {
             expiresIn: "1h",
         });
 
-        res.cookie("token", token, { httpOnly: true, sameSite: "lax" })
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
 
         res.status(200).json({
             message: "User logged in successfully",
@@ -106,10 +116,14 @@ async function logoutUserController(req, res) {
     try {
         const token = req.cookies.token;
 
-        if(token) {
+        if (token) {
             await tokenBlacklistModel.create({ token });
         }
-        res.clearCookie("token");
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        });
         res.status(200).json({ message: "User logged out successfully" });
     } catch (error) {
         console.error("Logout error:", error);

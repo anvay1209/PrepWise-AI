@@ -1,9 +1,4 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api",
-  withCredentials: true,
-});
+import api from "../../../api.js";
 
 export const generateResume = async (
   jobDescription,
@@ -37,24 +32,24 @@ export const generateResume = async (
     formData.append("resume", resume);
   }
 
-  const response = await api.post("/resume", formData);
+  const response = await api.post("/api/resume", formData);
   return response.data;
 };
 
 export const getAllResumes = async () => {
-  const response = await api.get("/resume");
+  const response = await api.get("/api/resume");
   return response.data;
 };
 
 export const downloadResumePdf = async (resumeId) => {
-  const response = await api.get(`/resume/${resumeId}/pdf`, {
+  const response = await api.get(`/api/resume/${resumeId}/pdf`, {
     responseType: "blob",
   });
   return response.data;
 };
 
 export const downloadUpdatedResumeFromReport = async (reportId) => {
-  const response = await api.get(`/resume/update_resume/${reportId}/pdf`, {
+  const response = await api.get(`/api/resume/update_resume/${reportId}/pdf`, {
     responseType: "blob",
   });
   return response.data;
