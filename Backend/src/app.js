@@ -24,6 +24,8 @@ app.get("/", (req, res) => {
         message: "PrepWise AI Backend Running 🚀",
     });
 });
+console.log("CLIENT_URL:", process.env.CLIENT_URL);
+console.log("NODE_ENV:", process.env.NODE_ENV);
 
 /* requires all auth routes here */
 const authRouter = require("./routes/auth.routes");
