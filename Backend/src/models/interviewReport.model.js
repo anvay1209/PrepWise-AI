@@ -104,6 +104,12 @@ const interviewReportSchema = new mongoose.Schema({
     resume : {
         type : String
     },
+    resumeFile: {
+        type: Buffer,
+    },
+    resumeFileMimeType: {
+        type: String,
+    },
     selfDescription : {
         type : String
     },
@@ -116,9 +122,25 @@ const interviewReportSchema = new mongoose.Schema({
     behavioralQuestions: [behavioralQuestionSchema],
     skillGaps: [skillGapSchema],
     preparationPlan: [preparationPlanSchema],
+    finalRecommendation: {
+        type: String,
+        default: "",
+    },
+    reportPdf: {
+        type: Buffer,
+    },
+    reportPdfMimeType: {
+        type: String,
+        default: "application/pdf",
+    },
     user : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "User"
+    },
+    title : {
+        type : String,
+        required : [true, "title is required"],
+        default : "Interview Report"
     }
 },{
     timestamps : true

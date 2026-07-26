@@ -15,14 +15,16 @@ const Register = () => {
   // Navigate to home/dashboard after successful registration
   useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleRegister(username, email, password);
-    navigate('/');
+    try {
+      await handleRegister(username, email, password);
+      navigate('/dashboard');
+    } catch {}
   }
 
   const goToLogin = () => {

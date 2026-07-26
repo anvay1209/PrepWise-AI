@@ -1,0 +1,222 @@
+.resume-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: #eef2ff;
+}
+
+.resume-hero {
+  padding: 2rem;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(99, 102, 241, 0.14), rgba(15, 23, 42, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.resume-hero .eyebrow {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #c7d2fe;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+}
+
+.resume-hero h1 {
+  font-size: clamp(2.4rem, 4vw, 3.3rem);
+  line-height: 1.05;
+  margin-bottom: 0.9rem;
+}
+
+.resume-hero p {
+  max-width: 720px;
+  color: #cbd5e1;
+  line-height: 1.8;
+}
+
+.resume-panel {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 1.75rem;
+}
+
+.resume-form,
+.resume-history {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 25px 60px rgba(6, 8, 18, 0.2);
+}
+
+.panel-heading h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.panel-heading p {
+  margin-top: 0.8rem;
+  color: #c7d2fe;
+  line-height: 1.75;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.input-group.small {
+  margin-top: 0;
+}
+
+.input-group label {
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.input-group textarea {
+  width: 100%;
+  min-height: 180px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 18px;
+  padding: 1rem;
+  color: #eef2ff;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input-group textarea:focus {
+  border-color: rgba(99, 102, 241, 0.7);
+}
+
+.file-group .upload-box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.4rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(148, 163, 184, 0.18);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.file-group .upload-box:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(99, 102, 241, 0.6);
+}
+
+.upload-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  color: white;
+  font-size: 1.5rem;
+}
+
+.upload-box h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #f8fafc;
+}
+
+.upload-box p {
+  margin: 0.2rem 0 0;
+  color: #c7d2fe;
+  font-size: 0.92rem;
+}
+
+.error-message,
+.success-message,
+.empty-state {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 16px;
+  font-weight: 600;
+}
+
+.error-message {
+  background: rgba(248, 113, 113, 0.12);
+  color: #fecaca;
+}
+
+.success-message {
+  background: rgba(52, 211, 153, 0.12);
+  color: #a7f3d0;
+}
+
+.primary-btn,
+.resume-card button {
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 1rem 1.4rem;
+  background: linear-gradient(90deg, #ff3d7f, #8b5cf6);
+  color: #fff;
+  transition: transform 0.2s ease;
+}
+
+.primary-btn:hover,
+.resume-card button:hover {
+  transform: translateY(-1px);
+}
+
+.resume-history .resume-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.resume-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 1.25rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.resume-card h3 {
+  margin: 0;
+}
+
+.resume-card span {
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+.resume-card p {
+  color: #c7d2fe;
+  margin: 0;
+  line-height: 1.7;
+}
+
+.resume-card button {
+  width: fit-content;
+}
+
+@media (max-width: 1040px) {
+  .resume-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .input-row {
+    grid-template-columns: 1fr;
+  }
+}

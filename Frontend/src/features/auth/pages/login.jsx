@@ -1,7 +1,7 @@
 import React from 'react'
 import '../auth.form.scss'
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAuth } from '../hooks/useAuth.js'
 
 
@@ -15,14 +15,16 @@ const Login = () => {
   // Navigate to home/dashboard after successful login
   useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleLogin(email, password);
-    navigate('/');
+    try {
+      await handleLogin(email, password);
+      navigate('/dashboard');
+    } catch {}
   }
   
   const goToRegister = () => {

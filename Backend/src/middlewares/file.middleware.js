@@ -2,7 +2,7 @@ const multr = require("multer");
 
 const upload = multr({
     storage: multr.memoryStorage(),
-    limits: { fileSize: 3 * 1024 * 1024 }, // Limit file size to 3MB
+    limits: { fileSize: 10 * 1024 * 1024 }, // Limit file size to 10MB
 });
 
 function singleResumeUpload(req, res, next) {
