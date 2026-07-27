@@ -46,6 +46,9 @@ export async function getMe() {
 
         return response.data;
     } catch (error) {
+        if (error.response?.status === 401) {
+            return null;
+        }
         console.error("Error fetching user data:", error);
         throw error;
     }
