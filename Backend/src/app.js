@@ -1,22 +1,26 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const cors = require("cors")
+const cors = require("cors");
 
 const app = express();
+
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://prepwise-ai-anvay.netlify.app",
+];
+
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true,
+}));
+
+app.options("*", cors({
+    origin: allowedOrigins,
+    credentials: true,
+}));
+
 app.use(express.json());
 app.use(cookieParser());
-
-const allowedOrigins = ["http://localhost:5173"];
-if (process.env.CLIENT_URL) {
-    allowedOrigins.push(process.env.CLIENT_URL);
-}
-
-app.use(
-    cors({
-        origin: allowedOrigins,
-        credentials: true,
-    })
-);
 
 app.get("/", (req, res) => {
     res.json({
