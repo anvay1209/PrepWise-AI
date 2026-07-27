@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useInterview } from "../hooks/useinterview";
 import { useAuth } from "../../auth/hooks/useAuth.js";
@@ -8,10 +8,15 @@ const Dashboard = () => {
   const { user } = useAuth();
   const { reports, loading, error, getAllReports, downloadPdf } = useInterview();
   const navigate = useNavigate();
+  const hasLoadedRef = useRef(false);
 
   useEffect(() => {
-    getAllReports().catch(() => {});
-  }, [getAllReports]);
+    // only load reports once per component mount to avoid duplicate API calls
+    if (!hasLoadedRef.current) {
+      hasLoadedRef.current = true;
+      getAllReports(4, 1).catch(() => {});
+    }
+  }, []);
 
   const bestScore = reports.reduce((max, item) => Math.max(max, Number(item.matchScore || 0)), 0);
   const latestReport = reports[0];
@@ -49,7 +54,7 @@ const Dashboard = () => {
             ) : reports.length === 0 ? (
               <div className="empty-state">No interview reports yet. Generate one to see personalized guidance.</div>
             ) : (
-              reports.slice(0, 4).map((report) => (
+              reports.map((report) => (
                 <article key={report._id} className="report-card">
                   <div className="report-meta">
                     <span className="report-title">{report.title || "Interview Report"}</span>

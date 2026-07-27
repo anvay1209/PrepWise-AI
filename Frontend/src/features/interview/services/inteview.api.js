@@ -30,8 +30,10 @@ export const getInterviewReportById = async (interviewId) => {
  * @description API service for retrieving all interview reports
  */
 
-export const getAllInterviewReports = async () => {
-    const response = await api.get("/api/interview");
+export const getAllInterviewReports = async (limit = 10, page = 1) => {
+    const response = await api.get("/api/interview", {
+        params: { limit, page }
+    });
     return response.data;
 }
 

@@ -139,15 +139,32 @@ async function getInterviewReportById(req, res) {
 
 async function getAllInterviewReports(req, res) {
     try {
-        const interviewReports = await interviewReportModel
-            .find({ user: req.user?.id || req.user?._id })
-            .sort({ createdAt: -1 })
-            .select("-resume -resumeFile -reportPdf -selfDescription -jobDescription -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan -__v");
+        const limit = parseInt(req.query.limit) || 10;
+        const page = parseInt(req.query.page) || 1;
+        const skip = (page - 1) * limit;
+
+        const userId = req.user?.id || req.user?._id;
+        
+        const [interviewReports, total] = await Promise.all([
+            interviewReportModel
+                .find({ user: userId })
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .select("-resume -resumeFile -reportPdf -selfDescription -jobDescription -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan -__v"),
+            interviewReportModel.countDocuments({ user: userId })
+        ]);
 
         return res.status(200).json({
             success: true,
             message: "Interview reports retrieved successfully",
             data: interviewReports,
+            pagination: {
+                total,
+                page,
+                limit,
+                pages: Math.ceil(total / limit)
+            }
         });
     } catch (error) {
         console.error("Get all interview reports error:", error);

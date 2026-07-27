@@ -57,11 +57,11 @@ export const useInterview = () => {
         }
     }, [setError, setLoading, setReport]);
 
-    const getAllReports = useCallback(async () => {
+    const getAllReports = useCallback(async (limit = 10, page = 1) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await getAllInterviewReports();
+            const response = await getAllInterviewReports(limit, page);
             setReports(response.data || []);
             return response.data || [];
         } catch (requestError) {
