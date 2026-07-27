@@ -6,18 +6,35 @@ const app = express();
 
 const allowedOrigins = ["http://localhost:5173"];
 if (process.env.CLIENT_URL) {
-    allowedOrigins.push(process.env.CLIENT_URL);
+    // support a comma-separated list of allowed client origins in the env var
+    allowedOrigins.push(...process.env.CLIENT_URL.split(",").map(s => s.trim()).filter(Boolean));
 }
 
 app.use(
     cors({
         origin: (origin, callback) => {
+            // allow non-browser requests (no origin) such as server-to-server or curl
             if (!origin) {
                 return callback(null, true);
             }
+
+            // allow exact matches from the whitelist
             if (allowedOrigins.includes(origin)) {
                 return callback(null, true);
             }
+
+            // allow common static-hosting provider subdomains if needed (netlify, render, vercel)
+            // this helps when CLIENT_URL isn't populated on the backend host but the frontend is hosted on one of these services
+            try {
+                const lower = origin.toLowerCase();
+                if (lower.endsWith('.netlify.app') || lower.endsWith('.onrender.com') || lower.endsWith('.vercel.app')) {
+                    return callback(null, true);
+                }
+            } catch (e) {
+                // ignore and fall through to rejection
+            }
+
+            console.warn('CORS blocked origin:', origin);
             callback(new Error("Not allowed by CORS"));
         },
         credentials: true,
