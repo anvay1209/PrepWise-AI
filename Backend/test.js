@@ -61,8 +61,11 @@ Return ONLY valid JSON in this format:
 
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-3.6-flash",
+            model: "gemini-3.7-flash",
             contents: prompt,
+            config: {
+                responseMimeType: "text/plain",
+            },
         });
 
         console.log("\n=== RAW RESPONSE ===\n");

@@ -265,7 +265,7 @@ Set "overallATSScore" to a number between 0 and 100.
 
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-3.6-flash",
+            model: "gemini-3.8-flash",
             contents: prompt,
             config: {
                 responseMimeType: "text/plain",
